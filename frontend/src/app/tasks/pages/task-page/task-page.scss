@@ -1,0 +1,51 @@
+:host {
+  display: block;
+}
+
+.task-page {
+  width: min(100% - 32px, 760px);
+
+  margin: 0 auto;
+
+  padding:
+    var(--spacing-xl)
+    0;
+}
+
+.task-page__header {
+  margin-bottom: var(--spacing-xl);
+}
+
+.task-page__title {
+  margin: 0;
+
+  font-size: 2rem;
+}
+
+.task-page__tasks {
+  margin-top: var(--spacing-xl);
+}
+
+.task-page__summary {
+  display: flex;
+  flex-wrap: wrap;
+
+  gap: var(--spacing-md);
+
+  margin-bottom: var(--spacing-lg);
+
+  color: var(--color-text-muted);
+}
+
+.task-page__message {
+  padding: var(--spacing-md);
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius);
+
+  background: var(--color-surface);
+}
+
+.task-page__error {
+  color: var(--color-danger);
+}

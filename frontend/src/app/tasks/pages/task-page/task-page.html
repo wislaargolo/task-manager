@@ -1,0 +1,112 @@
+-<main class="task-page">
+
+  <header class="task-page__header">
+
+    <h1 class="task-page__title">
+      Task Manager
+    </h1>
+
+  </header>
+
+
+  <section class="task-page__create">
+
+    <app-task-form
+      [initialValue]="createFormInitialValue"
+      [submitting]="isCreating()"
+      [submitError]="createError()"
+      submitLabel="Add Task"
+      submittingLabel="Adding..."
+      (submitted)="createTask($event)"
+    />
+
+  </section>
+
+
+  <section class="task-page__tasks">
+
+    <h2>
+      Tasks
+    </h2>
+
+
+    @if (isLoading()) {
+
+      <p class="task-page__message">
+        Loading tasks...
+      </p>
+
+    } @else if (loadError()) {
+
+      <p
+        class="task-page__message task-page__error"
+        role="alert"
+      >
+        {{ loadError() }}
+      </p>
+
+    } @else {
+
+      <div class="task-page__summary">
+
+        <span>
+          {{ totalTasks() }} tasks
+        </span>
+
+        <span>
+          {{ completedTasksCount() }}
+          completed
+        </span>
+
+        <span>
+          {{ pendingTasksCount() }}
+          pending
+        </span>
+
+      </div>
+
+
+      @if (taskActionError()) {
+
+        <p
+          class="task-page__message task-page__error"
+          role="alert"
+        >
+          {{ taskActionError() }}
+        </p>
+
+      }
+
+
+      @for (
+        task of tasks();
+        track task.id
+      ) {
+
+        <app-task-item
+          [task]="task"
+          [pending]="isTaskPending(task.id)"
+          (completionChange)="
+            updateCompletion(
+              task.id,
+              $event
+            )
+          "
+          (deleteRequested)="
+            deleteTask($event)
+          "
+        />
+
+      } @empty {
+
+        <p class="task-page__message">
+          No tasks found.
+        </p>
+
+      }
+
+    }
+
+  </section>
+
+</main>

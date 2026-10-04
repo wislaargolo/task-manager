@@ -1,0 +1,95 @@
+<article class="task-item">
+
+  <header class="task-item__header">
+
+    <h3
+      class="task-item__title"
+      [class.task-item__title--completed]="
+        task().completed
+      "
+    >
+      {{ task().title }}
+    </h3>
+
+
+    <span class="task-item__status">
+
+      @if (task().completed) {
+        Completed
+      } @else {
+        Pending
+      }
+
+    </span>
+
+  </header>
+
+
+  @if (task().description) {
+
+    <p class="task-item__description">
+      {{ task().description }}
+    </p>
+
+  }
+
+
+  <div class="task-item__details">
+
+    <span>
+      Priority:
+      {{ task().priority }}
+    </span>
+
+
+    @if (task().assignee) {
+
+      <span>
+        Assignee:
+        {{ task().assignee }}
+      </span>
+
+    }
+
+  </div>
+
+
+  <div class="task-item__actions">
+
+    <button
+      type="button"
+      [disabled]="pending()"
+      (click)="toggleCompletion()"
+    >
+
+      @if (task().completed) {
+        Reopen
+      } @else {
+        Complete
+      }
+
+    </button>
+
+
+    <a
+      [routerLink]="[
+        '/tasks',
+        task().id,
+        'edit'
+      ]"
+    >
+      Edit
+    </a>
+
+
+    <button
+      type="button"
+      [disabled]="pending()"
+      (click)="requestDelete()"
+    >
+      Delete
+    </button>
+
+  </div>
+
+</article>

@@ -1,0 +1,137 @@
+<section class="task-form">
+
+    @if (formTitle()) {
+    <h2 class="task-form__title">
+        {{ formTitle() }}
+    </h2>
+    }
+
+
+    <form [formGroup]="taskForm" (ngSubmit)="submit()">
+
+        <div class="task-form__fields">
+
+            <div class="task-form__field">
+
+                <label class="task-form__label" for="title">
+                    Title
+                </label>
+
+                <input class="task-form__input" id="title" type="text" formControlName="title">
+
+
+                @if (
+                taskForm.controls.title.hasError('required') &&
+                taskForm.controls.title.touched
+                ) {
+
+                <small class="task-form__validation-error">
+                    Title is required.
+                </small>
+
+                }
+
+
+                @if (
+                taskForm.controls.title.hasError('minlength') &&
+                taskForm.controls.title.touched
+                ) {
+
+                <small class="task-form__validation-error">
+                    Title must be at least 3 characters long.
+                </small>
+
+                }
+
+            </div>
+
+
+            <div class="task-form__field">
+
+                <label class="task-form__label" for="description">
+                    Description
+                </label>
+
+                <textarea class="task-form__textarea" id="description" formControlName="description"></textarea>
+
+            </div>
+
+
+            <div class="task-form__field">
+
+                <label class="task-form__label" for="priority">
+                    Priority
+                </label>
+
+                <select class="task-form__select" id="priority" formControlName="priority">
+
+                    <option value="LOW">
+                        Low
+                    </option>
+
+                    <option value="MEDIUM">
+                        Medium
+                    </option>
+
+                    <option value="HIGH">
+                        High
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="task-form__field">
+
+                <label class="task-form__label" for="assignee">
+                    Assignee
+                </label>
+
+                <input class="task-form__input" id="assignee" type="text" formControlName="assignee">
+
+            </div>
+
+            @if (showCompletedField()) {
+            <label class="task-form__checkbox" for="completed">
+                <input id="completed" type="checkbox" formControlName="completed">
+                Completed
+            </label>
+            }
+
+        </div>
+
+
+        @if (submitError()) {
+
+        <p class="task-form__submit-error" role="alert">
+            {{ submitError() }}
+        </p>
+
+        }
+
+
+        <div class="task-form__actions">
+            @if (cancelLabel()) {
+            <button
+                class="task-form__button task-form__button--secondary task-form__cancel"
+                type="button"
+                [disabled]="submitting()"
+                (click)="cancel()"
+            >
+                {{ cancelLabel() }}
+            </button>
+            }
+
+            <button class="task-form__button" type="submit" [disabled]="submitting()">
+                @if (submitting()) {
+                {{ submittingLabel() }}
+                } @else {
+                {{ submitLabel() }}
+                }
+            </button>
+        </div>
+
+    </form>
+
+</section>

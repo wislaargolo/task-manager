@@ -1,0 +1,30 @@
+<main class="task-edit-page">
+  <nav class="task-edit-page__breadcrumb" aria-label="Breadcrumb">
+    <a routerLink="/tasks">Tasks</a>
+    <span aria-hidden="true">/</span>
+    <span aria-current="page">Edit Task</span>
+  </nav>
+
+  <header class="task-edit-page__header">
+    <h1>Edit Task</h1>
+  </header>
+
+  @if (isLoadingState()) {
+    <p class="task-edit-page__message">Loading task...</p>
+  } @else if (loadErrorState()) {
+    <p class="task-edit-page__error" role="alert">{{ loadErrorState() }}</p>
+  } @else if (formInitialValue(); as initialValue) {
+    <app-task-form
+      [initialValue]="initialValue"
+      [formTitle]="null"
+      [showCompletedField]="true"
+      [submitting]="isSaving()"
+      [submitError]="submitError()"
+      submitLabel="Save Changes"
+      submittingLabel="Saving..."
+      cancelLabel="Cancel"
+      (submitted)="submit($event)"
+      (cancelled)="cancel()"
+    />
+  }
+</main>
